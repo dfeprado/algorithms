@@ -1,5 +1,11 @@
 DESCRIPTION
-Sort an array in place in O(n²)
+Sort an array in place in O(n²).
+
+This algorithm works defining a key element where all other elements before it will compare to.
+
+For each element in an array (key), starting from the second one, compare with each element before it (comparing).
+If comparing > key, make comparing take the place next to it. Else, stop.
+After all, make key take the place next to the last comparing place.
 
 INPUT
     A: An array of ints

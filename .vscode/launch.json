@@ -6,10 +6,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MergeSort",
+            "request": "launch",
+            "mainClass": "MergeSort",
+            "projectName": "algorithms_3a38051e"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "vmArgs": "-ea",
-            "mainClass": "${file}",
+            "mainClass": "${file}"
         },
         {
             "type": "java",

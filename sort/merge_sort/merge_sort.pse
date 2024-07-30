@@ -1,0 +1,73 @@
+DESCRIPTION:
+Sorts an array of ints, in place, in O(n logn)
+
+This algorithm works by dividing the array into pieces until just one
+is left, then it combines the pieces back sorting the elements.
+
+INPUT:
+    A: An array of ints
+    p: The lowest index of the array
+    r: The highest index of the array, where A[p:r]
+
+OUTPUT:
+    void: No output
+
+// This function only coordinates the sorting, dividing and conquering
+MERGE_SORT(A, p, r):
+    if p >= r:
+        return  // zero or one element
+
+    q = FLOOR((p + r)/2)    // middle index of A[p:r] (not exactly, maybe.)
+    MERGE_SORT(A, p, q)     // Sorts A[p:q]
+    MERGE_SORT(A, q + 1, r) // Sorts A[q + 1:r]
+    
+    MERGE(A, p, q, r)
+
+// This function is where sorting actually take place
+INPUT:
+    A: An array of int
+    p: The lowest index of the array
+    q: The middle index of the array
+    r: The highest index of the array
+
+OUTPUT:
+    void: No output
+MERGE(A, p, q, r):
+    left_size = q - p + 1
+    right_size = r - q
+
+    // Copy the left side (A[p:q]) and the right side (A[q + 1:r])
+    // to L and R, respectively
+    be L[0:left_size - 1] and R[0:right_size - 1] new arrays
+    for i = 0 to left_size - 1:
+        L[i] = A[p + i]
+
+    for j = 0 to right_size - 1:
+        R[i] = A[q + j + 1]
+
+    l_index = 0
+    r_index = 0
+    a_index = 0
+
+    // Compares each element in L and R inserting the
+    // smaller one back into A
+    while l_index < left_size AND r_index < right_size:
+        if L[l_index] < R[r_index]:
+            A[a_index] = L[l_index]
+            l_index = l_index + 1
+        else:
+            A[a_indx] = R[r_index]
+            r_index = r_index + 1
+
+        a_index = a_index + 1
+
+    // If there's any element left on any array, copy it back to A
+    while l_index < left_size:
+        A[a_index] = L[l_index]
+        l_index = l_index + 1
+        a_index = a_index + 1
+
+    while r_index < right_size:
+        A[a_index] = R[r_index]
+        r_index = r_index + 1
+        a_index = a_index + 1
