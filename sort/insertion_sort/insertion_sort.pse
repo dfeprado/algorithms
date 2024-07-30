@@ -1,0 +1,21 @@
+DESCRIPTION
+Sort an array in place in O(n²)
+
+INPUT
+    A: An array of ints
+    n: The total number of elements on A, where A[1:n]
+
+OUTPUT:
+    void: No output returned.
+
+INSERTION_SORT(A, n):
+    for i = 2 to n:
+        key = A[i]
+        j = i - 1
+        while j > 0 AND A[j] > key:
+            A[j + 1] = A[j]
+            j = j -1
+
+        A[j + 1] = key
+
+        
