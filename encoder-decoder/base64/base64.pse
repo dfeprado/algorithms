@@ -1,0 +1,61 @@
+// [A-Z][a-z][0-9][+/]
+CHAR_MAP = [
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    '+', '/'
+]
+
+
+DESCRIPTION:
+Encodes an array of bytes into a base64 encoding, represented by CHAR_MAP table above.
+
+INPUT:
+    A: an array of bytes
+    n: The length of A, 1-indexed
+
+OUTPUT:
+    A string representing A in base64
+
+BASE64_ENCODE(A, n):
+    encoded_A_sz = CEIL(n/6)
+    be encoded_A a new string of length encoded_A_sz
+    a_index = 0
+    whole_len = n div 3 // suppose div is a division that returns an int
+    for i = 1 to n step 3:
+        bigNumber = A[i] << 16 | A[i + 1] << 8 | A[i + 2]
+
+        encoded_A[a_index] = CHAR_MAP[bigNumber >> 18 & 0x3f]
+        a_index = a_index + 1
+        encoded_A[a_index] = CHAR_MAP[bigNumber >> 12 & 0x3f]
+        a_index = a_index + 1
+        encoded_A[a_index] = CHAR_MAP[bigNumber >> 6 & 0x3f]
+        a_index = a_index + 1
+        encoded_A[a_index] = CHAR_MAP[bigNumber & 0x3f]
+        a_index = a_index + 1
+
+    left_indexes = CEIL(n / 3 - whole_len)
+    if left_indexes == 0:
+        return encoded_A
+
+    bigNumber = 0
+    for x in left_indexes:
+        bigNumber |= A[x + whole_len]
+        bigNumber <<= 8
+    bigNumber <<= 8*(2 - left_indexes)
+
+    encoded_A[a_index] = CHAR_MAP[bigNumber >> 18 & 0x3f]
+    a_index = a_index + 1
+    if left_indexes == 1:
+        encoded_A[a_index] = CHAR_MAP[bigNumber >> 12 & 0x3f]
+        a_index = a_index + 1
+        encoded_A[a_index] = '='
+        encoded_A[a_index + 1] = '='
+    else:
+        encoded_A[a_index] = CHAR_MAP[bigNumber >> 12 & 0x3f]
+        a_index = a_index + 1
+        encoded_A[a_index] = CHAR_MAP[bigNumber >> 6 & 0x3f]
+        a_index = a_index + 1
+        encoded_A[a_index] = '='
+
+    return encoded_A
