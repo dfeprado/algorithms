@@ -1,0 +1,28 @@
+DESCRIPTION
+Normalize a timestamp from one offset to another
+
+Example:
+In an environment where you cannot control the application timezone but whant to control
+how some datetimes should be displayed, you can use this algorithm to do that.
+
+Imagine you have the following timestamp: 2024-01-02T00:00:00UTC or 2024-01-01T19:00:00-05 and you want
+then to be normalized to the offset -3, ie, both goes to 2024-01-01T21:00:00-03.
+This is the problem that this algorithm solves.
+
+INPUT:
+    D: Input datetime with timezone info
+    NORMALIZE_OFFSET: An integer with the desired offset (eg -3)
+
+OUTPUT:
+    DATETIME: The normalized datetime
+
+NORMALIZE_DATETIME_OFFSET(D, NORMALIZE_OFFSET):
+    # Both getOffset() and NORMALIZE_OFFSET should be
+    # in the same unit (ie, hours, minutes, seconds etc).
+    if D.getOffSet() == NORMALIZE_OFFSET:
+        # You can clone to keep unmutable
+        return DATETIME
+
+    normalizatioNFactor = NORMALIZE_OFFSET - DATETIME.getOffset()
+    return DateTime.fromEpoch(D.toEpoch() + normalizatioNFactor)
+    
